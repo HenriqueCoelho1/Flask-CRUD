@@ -61,6 +61,26 @@ def submit_form():
             return render_template("index.html", message=f"This {name} is already exist")
 
 
+@app.route("/update", methods=["GET", "POST"])
+def update():
+    if request.method == "POST":
+        my_data = User.query.get(request.form.get("id"))
+        # my_data.username = request.form["username"]
+        # my_data.name = request.form["name"]
+        # my_data.email = request.form["email"]
+
+        db.session.commit()
+        return render_template("success.html")
+
+
+@app.route("/delete/<id>/", methods=["GET", "POST"])
+def delete(id):
+    my_data = User.query.get(id)
+    db.session.delete(my_data)
+    db.session.commit()
+    return render_template("success.html")
+
+
 @app.route('/user/<name>')
 def user_id(name):
     return render_template("user.html", name=name)

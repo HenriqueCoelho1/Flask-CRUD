@@ -32,14 +32,60 @@
                         <td>{{ur.email}}</td>
                         <td>{{ur.cpf}}</td>
                         <td>
-                            <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit</a>
-                            <a href="" class="btn btn-danger btn-xs" 
-                                onclick="return confirm('Are you sure?')"
-                                data-toggle="modal" 
-                                data-target="#modaledit"
+                            <a href="/update/{{ur.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{ur.id}}">Edit</a>
+                            <a href="/delete/{{ur.id}}" class="btn btn-danger btn-xs" 
+                                onclick="return confirm('Are you sure?')" 
                                 >Delete</a>
                         </td>
                     </tr>
+                    <!-- Modal Update -->
+                    <div id="modaledit{{ur.id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit user</h4>
+                                </div>
+
+                                <div class="modal-body">
+                        
+                                    <form action="/update" method="POST">
+                                        <div class="form-group">
+                                            <label>Username:</label>
+                                            <input type="hidden" id="id" value="{{ur.id}}">
+                                            <input type="text" class="form-control" name="username" value="{{ur.username}}" required="1">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Name:</label>
+                                            <input type="text" class="form-control" name="name" value="{{ur.name}}" required="1">
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <label>Email:</label>
+                                            <input type="email" class="form-control" name="email" value="{{ur.email}}" required="1">
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <label>CPF:</label>
+                                            <input type="text" class="form-control" name="cpf" value="{{ur.cpf}}" disabled>
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">Edit User</button>
+                                        </div>
+                                    </form>
+                        
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                    
+                    
+                        </div>
+                    </div>
                     {% endfor %}
                 </tbody>
             </table>
@@ -93,53 +139,6 @@
             </div>
         </div>
 
-        <!-- Modal Update -->
-        <div id="modaledit" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit user</h4>
-                    </div>
-
-                    <div class="modal-body">
-            
-                        <form action="/edit" method="POST">
-                            <div class="form-group">
-                                <label>Username:</label>
-                                <input type="text" class="form-control" name="username" required="1">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Name:</label>
-                                <input type="text" class="form-control" name="name" required="1">
-                            </div>
-            
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <input type="email" class="form-control" name="email" required="1">
-                            </div>
-            
-                            <div class="form-group">
-                                <label>CPF:</label>
-                                <input type="text" class="form-control" name="cpf" disabled>
-                            </div>
-            
-                            <div class="form-group">
-                                <button class="btn btn-primary" type="submit">Add User</button>
-                            </div>
-                        </form>
-            
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-        
-        
-            </div>
-        </div>
 
 
     </div>
