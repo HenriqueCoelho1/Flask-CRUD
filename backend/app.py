@@ -65,9 +65,9 @@ def submit_form():
 def update():
     if request.method == "POST":
         my_data = User.query.get(request.form.get("id"))
-        # my_data.username = request.form["username"]
-        # my_data.name = request.form["name"]
-        # my_data.email = request.form["email"]
+        my_data.username = request.form["username"]
+        my_data.name = request.form["name"]
+        my_data.email = request.form["email"]
 
         db.session.commit()
         return render_template("success.html")
