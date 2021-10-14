@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}List of all users{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Dealer</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ur in users %}
+                <tr>
+                    <td>{{ur.customer}}</td>
+                    <td>{{ur.dealer}}</td>
+                    <td>{{ur.rating}}</td>
+                    <td>{{ur.comments}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </div>
+    </div>
+</div>
+{% endblock %}

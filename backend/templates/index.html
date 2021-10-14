@@ -4,56 +4,144 @@
 {% block title %}Flasky{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <form action="/submit" method="POST">
-        <div class="form-group">
-            {% if message %}
-                <div class="alert alert-warning">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ message | safe }}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron p-3">
+            <h2>Manage <b>Users</b> 
+                <button class="btn btn-success mr-auto" data-toggle="modal" data-target="#mymodal">
+                    Add new user
+                </button> 
+            </h2>
+            <table class="table table-hover table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>CPF</th>
+                        <th>Action</th>
+                    </tr>
+                <tbody>
+                    {% for ur in users %}
+                    <tr>
+                        <td>{{ur.id}}</td>
+                        <td>{{ur.username}}</td>
+                        <td>{{ur.name}}</td>
+                        <td>{{ur.email}}</td>
+                        <td>{{ur.cpf}}</td>
+                        <td>
+                            <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit</a>
+                            <a href="" class="btn btn-danger btn-xs" 
+                                onclick="return confirm('Are you sure?')"
+                                data-toggle="modal" 
+                                data-target="#modaledit"
+                                >Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal Create -->
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add user</h4>
+                    </div>
+
+                    <div class="modal-body">
+            
+                        <form action="/submit" method="POST">
+                            <div class="form-group">
+                                <label>Username:</label>
+                                <input type="text" class="form-control" name="username" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input type="text" class="form-control" name="name" required="1">
+                            </div>
+            
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" class="form-control" name="email" required="1">
+                            </div>
+            
+                            <div class="form-group">
+                                <label>CPF:</label>
+                                <input type="text" class="form-control" name="cpf" required="11">
+                            </div>
+            
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Add User</button>
+                            </div>
+                        </form>
+            
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-            {% endif %}
-            <h3>Customer Name</h3>
-            <input
-                type="text"
-                name="customer"
-                placeholder="Name of vehicle owner"
-            />
+        
+        
             </div>
-            <div class="form-group">
-            <h3>Dealer</h3>
-            <select name="dealer">
-                <option value="">Select Dealer</option>
-                <option value="Tom Smith">Tom Smith</option>
-                <option value="Karen Swanson">Karen Swanson</option>
-                <option value="Jim Johnson">Jim Johnson</option>
-                <option value="Shauna Gifford">Shauna Gifford</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <h3>Rate your dealer</h3>
-            <input type="radio" name="rating" value="1" />1
-            <input type="radio" name="rating" value="2" />2
-            <input type="radio" name="rating" value="3" />3
-            <input type="radio" name="rating" value="4" />4
-            <input type="radio" name="rating" value="5" />5
-            <input type="radio" name="rating" value="6" />6
-            <input type="radio" name="rating" value="7" />7
-            <input type="radio" name="rating" value="8" />8
-            <input type="radio" name="rating" value="9" />9
-            <input type="radio" name="rating" value="10" checked />10
         </div>
 
-        <div class="form-group">
-            <h3>Comment here you experience</h3>
-            <textarea name="comments" 
-            id="" 
-            cols="30" 
-            rows="10" 
-            placeholder="Comment here your experience"></textarea>
-            <input type="submit" value="Submit" class="btn btn-rounded" />
+        <!-- Modal Update -->
+        <div id="modaledit" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit user</h4>
+                    </div>
+
+                    <div class="modal-body">
+            
+                        <form action="/edit" method="POST">
+                            <div class="form-group">
+                                <label>Username:</label>
+                                <input type="text" class="form-control" name="username" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input type="text" class="form-control" name="name" required="1">
+                            </div>
+            
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" class="form-control" name="email" required="1">
+                            </div>
+            
+                            <div class="form-group">
+                                <label>CPF:</label>
+                                <input type="text" class="form-control" name="cpf" disabled>
+                            </div>
+            
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Add User</button>
+                            </div>
+                        </form>
+            
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+        
+        
+            </div>
         </div>
 
-    </form>
+
+    </div>
 </div>
 {% endblock %}

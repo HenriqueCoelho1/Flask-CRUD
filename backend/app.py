@@ -21,43 +21,44 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
-class FeedBack(db.Model):
-    __tablename__ = "feedback"
+class User(db.Model):
+    __tablename__ = "usr"
     id = db.Column(db.Integer, primary_key=True)
-    customer = db.Column(db.String(200), unique=True)
-    dealer = db.Column(db.String(200))
-    rating = db.Column(db.Integer)
-    comments = db.Column(db.Text())
+    username = db.Column(db.String(200), unique=True, nullable=False)
+    name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False)
 
-    def __init__(self, customer, dealer, rating, comments):
-        self.customer = customer
-        self.dealer = dealer
-        self.rating = rating
-        self.comments = comments
+    def __init__(self, username, name, email, cpf):
+        self.username = username
+        self.name = name
+        self.email = email
+        self.cpf = cpf
 
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    all_data = User.query.all()
+    return render_template("index.html", users=all_data)
 
 
 @app.route('/submit', methods=["POST"])
 def submit_form():
     if request.method == "POST":
-        customer = request.form["customer"]
-        dealer = request.form["dealer"]
-        rating = request.form["rating"]
-        comments = request.form["comments"]
-        # print(customer, dealer, rating, comments)
-        if customer == "" or dealer == "":
+        username = request.form["username"]
+        name = request.form["name"]
+        email = request.form["email"]
+        cpf = request.form["cpf"]
+        # print(username, name, email, cpf)
+        if username == "" or name == "" or email == "" or cpf == "":
             return render_template("index.html", message="Please enter required fields")
-        if db.session.query(FeedBack).filter(FeedBack.customer == customer).count() == 0:
-            data = FeedBack(customer, dealer, rating, comments)
+        if db.session.query(User).filter(User.username == username).count() == 0:
+            data = User(username, name, email, cpf)
             db.session.add(data)
             db.session.commit()
             return render_template("success.html")
         else:
-            return render_template("index.html", message="This name is already exist")
+            return render_template("index.html", message=f"This {name} is already exist")
 
 
 @app.route('/user/<name>')
